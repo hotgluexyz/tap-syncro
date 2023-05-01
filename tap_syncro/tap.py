@@ -37,7 +37,7 @@ class Tapsyncro(Tap):
             A list of discovered streams.
         """
         return [
-           cls(self) for name, cls in inspect.getmembers(streams,inspect.isclass) if cls.__module__ == 'tap_square.streams'
+           cls(self) for name, cls in inspect.getmembers(streams,inspect.isclass) if cls.__module__ == 'tap_syncro.streams'
         ]
 
 if __name__ == "__main__":
