@@ -64,8 +64,8 @@ class CustomersStream(syncroStream):
         th.Property("city",th.StringType),
         th.Property("state",th.StringType),
         th.Property("zip",th.StringType),
-        th.Property("latitude",th.StringType),
-        th.Property("longitude",th.StringType),
+        th.Property("latitude",th.NumberType),
+        th.Property("longitude",th.NumberType),
         th.Property("notes",th.StringType),
         th.Property("get_sms",th.BooleanType),
         th.Property("opt_out",th.BooleanType),
@@ -77,7 +77,7 @@ class CustomersStream(syncroStream):
         th.Property("tax_rate_id",th.IntegerType),
         th.Property("notification_email",th.StringType),
         th.Property("invoice_cc_emails",th.StringType),
-        th.Property("invoice_term_id",th.StringType),
+        th.Property("invoice_term_id",th.NumberType),
         th.Property("referred_by",th.StringType),
         th.Property("ref_customer_id",th.IntegerType),
         th.Property("business_and_full_name",th.StringType),
@@ -101,7 +101,7 @@ class AppointmentsStream(syncroStream):
     primary_keys=["id"]
 
     schema = th.PropertiesList(
-        th.Property('id',th.StringType),
+        th.Property('id',th.IntegerType),
         th.Property('summary',th.StringType),
         th.Property('description',th.StringType),
         th.Property('customer_id',th.IntegerType),
@@ -123,7 +123,7 @@ class AppointmentsStream(syncroStream):
                 th.Property('subject',th.StringType),
                 th.Property('created_at',th.StringType),
                 th.Property('customer_id',th.IntegerType),
-                th.Property('customer_business_then_name',th.IntegerType),
+                th.Property('customer_business_then_name',th.StringType),
                 th.Property('due_date',th.DateTimeType),
                 th.Property('resolved_at',th.DateTimeType),
                 th.Property('start_at',th.DateTimeType),
@@ -144,7 +144,7 @@ class AppointmentsStream(syncroStream):
                             th.Property('id',th.IntegerType),
                             th.Property('created_at',th.DateTimeType),
                             th.Property('updated_at',th.DateTimeType),
-                            th.Property('ticket_id',th.DateTimeType),
+                            th.Property('ticket_id',th.IntegerType),
                             th.Property('subject',th.StringType),
                             th.Property('body',th.StringType),
                             th.Property('tech',th.StringType),
@@ -206,7 +206,7 @@ class AssetsStream(syncroStream):
             )
         ),
         th.Property('has_live_chat',th.BooleanType),
-        th.Property('snmp_enabled',th.StringType),
+        th.Property('snmp_enabled',th.BooleanType),
         th.Property('device_info',th.CustomType({"type": ["object"]})),
         th.Property(
             "rmm_store",
@@ -241,11 +241,11 @@ class AssetsStream(syncroStream):
                                 th.Property('active_end',th.IntegerType)
                             ),
                         ),
-                        th.Property('wu_available',th.StringType),
-                        th.Property('wu_latest',th.StringType),
-                        th.Property('wu_on',th.StringType),
-                        th.Property('wu_error',th.StringType),
-                        th.Property('windows_update',th.StringType),
+                        th.Property('wu_available',th.CustomType({"type": ["object", "string"]})),
+                        th.Property('wu_latest',th.CustomType({"type": ["object", "string"]})),
+                        th.Property('wu_on',th.CustomType({"type": ["object", "string"]})),
+                        th.Property('wu_error',th.CustomType({"type": ["object", "string"]})),
+                        th.Property('windows_update',th.CustomType({"type": ["object", "string"]})),
                     )
                 ),
                 th.Property(
@@ -312,9 +312,9 @@ class AssetsStream(syncroStream):
                 th.Property("updated_at",th.DateTimeType),
                 th.Property("override_alert_agent_offline_mins",th.NumberType),
                 th.Property("override_alert_agent_rearm_after_mins",th.NumberType),
-                th.Property("override_low_hd_thresholds",th.NumberType),
-                th.Property("override_low_hd_threshold",th.NumberType),
-                th.Property("override_autoresolve_offline_alert",th.NumberType),
+                th.Property("override_low_hd_thresholds",th.CustomType({"type": ["array", "object", "string"]})),
+                th.Property("override_low_hd_threshold",th.CustomType({"type": ["array", "object", "string", "number"]})),
+                th.Property("override_autoresolve_offline_alert",th.CustomType({"type": ["array", "object", "string"]})),
 
             )
         ),
@@ -384,9 +384,9 @@ class EstimatesStream(syncroStream):
         th.Property("updated_at",th.DateTimeType),
         th.Property('customer_id',th.IntegerType),
         th.Property("date",th.DateTimeType),
-        th.Property("subtotal",th.NumberType),
-        th.Property("total",th.NumberType),
-        th.Property("tax",th.NumberType),
+        th.Property("subtotal",th.StringType),
+        th.Property("total",th.StringType),
+        th.Property("tax",th.StringType),
         th.Property("ticket_id",th.IntegerType),
         th.Property("ticket_id",th.IntegerType),
         th.Property("pdf_url",th.StringType),
@@ -412,9 +412,9 @@ class ItemsStream(syncroStream):
         th.Property("orderedby",th.StringType),
         th.Property("orderedon",th.DateTimeType),
         th.Property("trackingnum",th.StringType),
-        th.Property('ticketnum',th.StringType),
+        th.Property('ticketnum',th.IntegerType),
         th.Property("receivedon",th.DateTimeType),
-        th.Property("price",th.NumberType),
+        th.Property("price",th.StringType),
         th.Property('description',th.StringType),
         th.Property("account_id",th.IntegerType),
         th.Property("destination_location_id",th.IntegerType),
@@ -503,7 +503,7 @@ class PortalUsersStream(syncroStream):
         th.Property('mobile',th.StringType),
         th.Property('confirmed_mobile',th.StringType),
         th.Property('second_factor_recovery_attempts_count',th.IntegerType),
-        th.Property('require_mfa',th.StringType)
+        th.Property('require_mfa',th.BooleanType)
     ).to_dict()
     
 
@@ -523,8 +523,8 @@ class ProductsStream(syncroStream):
         th.Property("name",th.StringType),
         th.Property("quantity",th.IntegerType),
         th.Property("warranty",th.StringType),
-        th.Property("sort_order",th.StringType),
-        th.Property("reorder_at",th.StringType),
+        th.Property("sort_order",th.IntegerType),
+        th.Property("reorder_at",th.IntegerType),
         th.Property("disabled",th.BooleanType),
         th.Property("taxable",th.BooleanType),
         th.Property("product_category",th.StringType),
@@ -533,10 +533,10 @@ class ProductsStream(syncroStream):
         th.Property("discount_percent",th.StringType),
         th.Property("warranty_template_id",th.IntegerType),
         th.Property("qb_item_id",th.IntegerType),
-        th.Property("desired_stock_level",th.StringType),
+        th.Property("desired_stock_level",th.NumberType),
         th.Property("price_wholesale",th.NumberType),
         th.Property("notes",th.StringType),
-        th.Property("tax_rate_id",th.StringType),
+        th.Property("tax_rate_id",th.IntegerType),
         th.Property("physical_location",th.StringType),
         th.Property("serialized",th.BooleanType),
         th.Property("vendor_ids",th.ArrayType(th.IntegerType)), ## TODO: Verify
@@ -549,11 +549,11 @@ class ProductsStream(syncroStream):
                     th.Property('product_id',th.IntegerType),
                     th.Property('location_id',th.IntegerType),
                     th.Property('quantity',th.IntegerType),
-                    th.Property('tax_rate_id',th.StringType),
+                    th.Property('tax_rate_id',th.IntegerType),
                     th.Property('created_at',th.DateTimeType),
                     th.Property('updated_at',th.DateTimeType),
-                    th.Property('reorder_at',th.StringType),
-                    th.Property('desired_stock_level',th.StringType),
+                    th.Property('reorder_at',th.IntegerType),
+                    th.Property('desired_stock_level',th.NumberType),
                     th.Property('price_cost_cents',th.NumberType),
                     th.Property('price_retail_cents',th.NumberType),
                 )
@@ -561,12 +561,14 @@ class ProductsStream(syncroStream):
         ),
         th.Property(
             "photos",
-            th.ObjectType(
+            th.ArrayType(
+                th.ObjectType(
                 th.Property("id",th.IntegerType),
                 th.Property('created_at',th.DateTimeType),
                 th.Property('updated_at',th.DateTimeType),
                 th.Property('photo_url',th.StringType),
                 th.Property('thumbnail_url',th.StringType)
+                )
             )
         )
     ).to_dict()
@@ -579,7 +581,7 @@ class PurchaseOrdersStream(syncroStream):
 
     schema = th.PropertiesList(
         th.Property("id",th.IntegerType),
-        th.Property("account_subdomain",th.NumberType),
+        th.Property("account_subdomain",th.StringType),
         th.Property("created_at",th.DateTimeType),
         th.Property("updated_at",th.DateTimeType),
         th.Property("expected_date",th.DateTimeType),
