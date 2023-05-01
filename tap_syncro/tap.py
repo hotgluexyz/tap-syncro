@@ -25,10 +25,8 @@ class Tapsyncro(Tap):
             description="The token to authenticate against the API service",
         ),
         th.Property(
-            "api_url",
-            th.StringType,
-            default="https://demo.syncromsp.com/api/v1",
-            description="The url for the API service",
+            "subdomain",
+            th.StringType
         ),
     ).to_dict()
 
