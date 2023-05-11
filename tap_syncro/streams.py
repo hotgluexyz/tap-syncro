@@ -114,7 +114,7 @@ class AppointmentsStream(syncroStream):
         th.Property('ticket_id',th.IntegerType),
         th.Property('appointment_location_type',th.StringType),
         th.Property('start_at_label',th.StringType),
-        th.Property('all_day',th.StringType),
+        th.Property('all_day',th.BooleanType),
         th.Property(
             'ticket',
             th.ObjectType(
