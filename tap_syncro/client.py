@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Callable, Iterable
-
+from typing import Optional, Any, Generator, Dict, Callable
+import backoff
 import requests
 from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.helpers.jsonpath import extract_jsonpath
@@ -115,46 +116,19 @@ class syncroStream(RESTStream):
             params["order_by"] = self.replication_key
         return params
 
-    def prepare_request_payload(
-        self,
-        context: dict | None,
-        next_page_token: Any | None,
-    ) -> dict | None:
-        """Prepare the data payload for the REST API request.
+    def backoff_wait_generator(self) -> Generator[float, None, None]:
+        """The wait generator used by the backoff decorator on request failure.
 
-        By default, no payload will be sent (return None).
+        See for options:
+        https://github.com/litl/backoff/blob/master/backoff/_wait_gen.py
 
-        Args:
-            context: The stream context.
-            next_page_token: The next page index or value.
+        And see for examples: `Code Samples <../code_samples.html#custom-backoff>`_
 
         Returns:
-            A dictionary with the JSON body for a POST requests.
+            The wait generator
         """
-        # TODO: Delete this method if no payload is required. (Most REST APIs.)
-        return None
+        return backoff.constant(interval=60)
 
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        """Parse the response and return an iterator of result records.
+   
 
-        Args:
-            response: The HTTP ``requests.Response`` object.
-
-        Yields:
-            Each record from the source.
-        """
-        # TODO: Parse response body and return a set of records.
-        yield from extract_jsonpath(self.records_jsonpath, input=response.json())
-
-    def post_process(self, row: dict, context: dict | None = None) -> dict | None:
-        """As needed, append or transform raw data to match expected structure.
-
-        Args:
-            row: An individual record from the stream.
-            context: The stream context.
-
-        Returns:
-            The updated record dictionary, or ``None`` to skip the record.
-        """
-        # TODO: Delete this method if not needed.
-        return row
+   

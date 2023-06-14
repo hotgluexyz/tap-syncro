@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 from singer_sdk import typing as th  # JSON Schema typing helpers
 
@@ -637,3 +638,268 @@ class PurchaseOrdersStream(syncroStream):
         )
     ).to_dict()
      
+
+class InvoicesStream(syncroStream):
+    name="invoices"
+    path="/invoices"
+    records_jsonpath="$.invoices[*]"
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("customer_id", th.IntegerType),
+        th.Property("customer_business_then_name", th.StringType),
+        th.Property("number", th.StringType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("date", th.DateTimeType),
+        th.Property("due_date", th.DateTimeType),
+        th.Property("subtotal", th.StringType),
+        th.Property("total", th.StringType),
+        th.Property("tax", th.StringType),
+        th.Property("verified_paid", th.BooleanType),
+        th.Property("tech_marked_paid", th.BooleanType),
+        th.Property("ticket_id", th.IntegerType),
+        th.Property("pdf_url", th.StringType),
+        th.Property("is_paid", th.BooleanType),
+        th.Property("location_id", th.IntegerType),
+        th.Property("po_number", th.StringType),
+        th.Property("contact_id", th.IntegerType),
+        th.Property("note", th.StringType),
+        th.Property("hardwarecost", th.StringType),
+        th.Property("user_id", th.IntegerType)
+    ).to_dict()
+
+
+
+class PaymentsStream(syncroStream):
+    """Define custom stream."""
+    name = "payments"
+    path = "/payments"
+    primary_keys = ["id"]
+    records_jsonpath="$.payments[*]"
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("created_at", th.StringType),
+        th.Property("updated_at", th.StringType),
+        th.Property("success", th.BooleanType),
+        th.Property("payment_amount", th.NumberType),
+        th.Property("invoice_ids", th.ArrayType(th.IntegerType)),
+        th.Property("ref_num", th.StringType),
+        th.Property("applied_at", th.StringType),
+        th.Property("payment_method", th.StringType),
+        th.Property("customer", 
+            th.ObjectType(
+                th.Property("id", th.IntegerType),
+                th.Property("firstname", th.StringType),
+                th.Property("lastname", th.StringType),
+                th.Property("fullname", th.StringType),
+                th.Property("business_name", th.StringType),
+                th.Property("email", th.StringType),
+                th.Property("phone", th.StringType),
+                th.Property("mobile", th.StringType),
+                th.Property("created_at", th.StringType),
+                th.Property("updated_at", th.StringType),
+                th.Property("pdf_url", th.StringType),
+                th.Property("address", th.StringType),
+                th.Property("address_2", th.StringType),
+                th.Property("city", th.StringType),
+                th.Property("state", th.StringType),
+                th.Property("zip", th.StringType),
+                th.Property("latitude", th.NumberType),
+                th.Property("longitude", th.NumberType),
+                th.Property("notes", th.StringType),
+                th.Property("get_sms", th.BooleanType),
+                th.Property("opt_out", th.BooleanType),
+                th.Property("disabled", th.BooleanType),
+                th.Property("no_email", th.BooleanType),
+                th.Property("location_name", th.StringType),
+                th.Property("location_id", th.IntegerType),
+                th.Property("online_profile_url", th.StringType),
+                th.Property("tax_rate_id", th.IntegerType),
+                th.Property("notification_email", th.StringType),
+                th.Property("invoice_cc_emails", th.StringType),
+                th.Property("invoice_term_id", th.StringType),
+                th.Property("referred_by", th.StringType),
+                th.Property("ref_customer_id", th.IntegerType),
+                th.Property("business_and_full_name", th.StringType),
+                th.Property("business_then_name", th.StringType),
+            )
+        ),
+    ).to_dict()
+
+
+class RMMAlertStream(syncroStream):
+    """Define custom stream."""
+    name = "rmm_alerts"
+    path = "/rmm_alerts"
+    records_jsonpath="$.rmm_alerts[*]"
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("customer_id", th.IntegerType),
+        th.Property("ticket_number", th.IntegerType),
+        th.Property("ticket_status", th.StringType),
+        th.Property("computer_name", th.StringType),
+        th.Property("resolved", th.BooleanType),
+        th.Property("check_id", th.IntegerType),
+        th.Property("status", th.StringType),
+        th.Property("formatted_output", th.StringType),
+        th.Property("description", th.StringType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("asset_id", th.IntegerType),
+    ).to_dict()
+
+
+class TicketTimerStream(syncroStream):
+    
+    name = "ticket_timers"
+    path = "/ticket_timers"
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("ticket_id", th.IntegerType),
+        th.Property("user_id", th.IntegerType),
+        th.Property("start_time", th.DateTimeType),
+        th.Property("end_time", th.DateTimeType),
+        th.Property("recorded", th.BooleanType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("billable", th.BooleanType),
+        th.Property("notes", th.StringType),
+        th.Property("toggl_id", th.IntegerType),
+        th.Property("product_id", th.IntegerType),
+        th.Property("comment_id", th.IntegerType),
+        th.Property("ticket_line_item_id", th.IntegerType),
+        th.Property("active_duration", th.StringType)
+    ).to_dict()
+
+class TicketsStream(syncroStream):
+    """Define custom stream."""
+    name = "tickets"
+    path = "/tickets"
+    records_jsonpath="$.tickets[*]"
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("number", th.IntegerType),
+        th.Property("subject", th.StringType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("customer_id", th.IntegerType),
+        th.Property("customer_business_then_name", th.StringType),
+        th.Property("due_date", th.DateTimeType),
+        th.Property("resolved_at", th.DateTimeType),
+        th.Property("start_at", th.DateTimeType),
+        th.Property("end_at", th.DateTimeType),
+        th.Property("location_id", th.IntegerType),
+        th.Property("problem_type", th.StringType),
+        th.Property("status", th.StringType),
+        th.Property("ticket_type_id", th.IntegerType),
+        th.Property("user_id", th.IntegerType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("pdf_url", th.StringType),
+        th.Property("priority", th.StringType),
+        th.Property("comments", th.ArrayType(th.ObjectType(
+            th.Property("id", th.IntegerType),
+            th.Property("body", th.StringType),
+            th.Property("created_at", th.DateTimeType),
+            th.Property("updated_at", th.DateTimeType),
+            th.Property("user_id", th.IntegerType),
+            th.Property("ticket_id", th.IntegerType),
+            th.Property("tech", th.StringType),
+            th.Property("subject", th.StringType),
+            th.Property("hidden", th.BooleanType),
+
+        ))),
+        th.Property("user", th.StringType),
+    ).to_dict()
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {"ticket_id": record["id"]}
+
+class WorkSheetResultsStream(syncroStream):
+    name = "worksheet_results"
+    path = "/tickets/{ticket_id}/worksheet_results"
+    records_jsonpath="$.worksheet_results[*]"
+    parent_stream_type = TicketsStream
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("worksheet_template_id", th.IntegerType),
+        th.Property("name", th.StringType),
+        th.Property("public", th.BooleanType),
+        th.Property("complete", th.BooleanType),
+        th.Property("required", th.BooleanType),
+        th.Property("field_list", th.ArrayType(
+            th.ObjectType(
+                th.Property("name", th.StringType),
+                th.Property("slug", th.StringType),
+                th.Property("id", th.StringType),
+                th.Property("position", th.StringType),
+            ))),
+    ).to_dict()
+
+class TimeLogsStream(syncroStream):
+    """Define custom stream."""
+    name = "timelogs"
+    path = "/timelogs"
+    records_jsonpath="$.timelogs[*]"
+    primary_keys = ["id"]
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("in_at", th.StringType),
+        th.Property("out_at", th.StringType),
+        th.Property("account_id", th.IntegerType),
+        th.Property("user_id", th.IntegerType),
+        th.Property("in_note", th.StringType),
+        th.Property("out_note", th.StringType),
+        th.Property("created_at", th.StringType),
+        th.Property("updated_at", th.StringType),
+        th.Property("lunch", th.BooleanType),
+        th.Property("manually_updated", th.BooleanType),
+    ).to_dict()
+
+
+class VendorsStream(syncroStream):
+    """Define custom stream."""
+    name = "vendors"
+    path = "/vendors"
+    primary_keys = ["id"]
+    records_jsonpath="$.vendors[*]"
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("name", th.StringType),
+        th.Property("rep_first_name", th.StringType),
+        th.Property("rep_last_name", th.StringType),
+        th.Property("email", th.StringType),
+        th.Property("phone", th.StringType),
+        th.Property("account_number", th.StringType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("address", th.StringType),
+        th.Property("city", th.StringType),
+        th.Property("state", th.StringType),
+        th.Property("zip", th.StringType),
+        th.Property("website", th.StringType),
+        th.Property("notes", th.StringType),
+    ).to_dict()
+
+   
+class WikiPagesStream(syncroStream):
+    """Define custom stream."""
+    name = "wiki_pages"
+    path = "/wiki_pages"
+    primary_keys = ["id"]
+    records_jsonpath="$.wiki_pages[*]"
+    schema = th.PropertiesList(
+        th.Property("id", th.IntegerType),
+        th.Property("account_id", th.IntegerType),
+        th.Property("name", th.StringType),
+        th.Property("slug", th.StringType),
+        th.Property("body", th.StringType),
+        th.Property("interpolated_body", th.StringType),
+        th.Property("modified", th.DateTimeType),
+    ).to_dict()
+
+
