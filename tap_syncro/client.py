@@ -6,6 +6,9 @@ from pathlib import Path
 from typing import Any, Callable, Iterable
 from typing import Optional, Any, Generator, Dict, Callable
 import backoff
+import logging
+from backoff.types import Details
+
 import requests
 from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.helpers.jsonpath import extract_jsonpath
@@ -130,5 +133,17 @@ class syncroStream(RESTStream):
         return backoff.constant(interval=60)
 
    
+    def backoff_handler(self, details: Details) -> None:
+        """Adds additional behaviour prior to retry.
 
+        By default will log out backoff details, developers can override
+        to extend or change this behaviour.
+
+        Args:
+            details: backoff invocation details
+                https://github.com/litl/backoff#event-handlers
+        """
+        logging.info(
+            "Backing off 60 seconds"
+        )
    
