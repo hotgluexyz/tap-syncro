@@ -718,7 +718,7 @@ class PaymentsStream(syncroStream):
                 th.Property("tax_rate_id", th.IntegerType),
                 th.Property("notification_email", th.StringType),
                 th.Property("invoice_cc_emails", th.StringType),
-                th.Property("invoice_term_id", th.StringType),
+                th.Property("invoice_term_id", th.IntegerType),
                 th.Property("referred_by", th.StringType),
                 th.Property("ref_customer_id", th.IntegerType),
                 th.Property("business_and_full_name", th.StringType),
