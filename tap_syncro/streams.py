@@ -811,7 +811,18 @@ class TicketsStream(syncroStream):
             th.Property("hidden", th.BooleanType),
 
         ))),
-        th.Property("user", th.StringType),
+        th.Property('user',
+                    th.ObjectType(
+                        th.Property('id',th.IntegerType),
+                        th.Property('email',th.StringType),
+                        th.Property('full_name',th.StringType),
+                        th.Property('created_at',th.DateTimeType),
+                        th.Property('updated_at',th.DateTimeType),
+                        th.Property('group',th.StringType),
+                        th.Property('admin?',th.BooleanType),
+                        th.Property('color',th.StringType)
+                    )
+                ),
     ).to_dict()
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
