@@ -829,27 +829,27 @@ class TicketsStream(syncroStream):
         """Return a context dictionary for child streams."""
         return {"ticket_id": record["id"]}
 
-class WorkSheetResultsStream(syncroStream):
-    name = "worksheet_results"
-    path = "/tickets/{ticket_id}/worksheet_results"
-    records_jsonpath="$.worksheet_results[*]"
-    parent_stream_type = TicketsStream
-    primary_keys = ["id"]
-    schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
-        th.Property("worksheet_template_id", th.IntegerType),
-        th.Property("name", th.StringType),
-        th.Property("public", th.BooleanType),
-        th.Property("complete", th.BooleanType),
-        th.Property("required", th.BooleanType),
-        th.Property("field_list", th.ArrayType(
-            th.ObjectType(
-                th.Property("name", th.StringType),
-                th.Property("slug", th.StringType),
-                th.Property("id", th.StringType),
-                th.Property("position", th.StringType),
-            ))),
-    ).to_dict()
+# class WorkSheetResultsStream(syncroStream):
+#     name = "worksheet_results"
+#     path = "/tickets/{ticket_id}/worksheet_results"
+#     records_jsonpath="$.worksheet_results[*]"
+#     parent_stream_type = TicketsStream
+#     primary_keys = ["id"]
+#     schema = th.PropertiesList(
+#         th.Property("id", th.IntegerType),
+#         th.Property("worksheet_template_id", th.IntegerType),
+#         th.Property("name", th.StringType),
+#         th.Property("public", th.BooleanType),
+#         th.Property("complete", th.BooleanType),
+#         th.Property("required", th.BooleanType),
+#         th.Property("field_list", th.ArrayType(
+#             th.ObjectType(
+#                 th.Property("name", th.StringType),
+#                 th.Property("slug", th.StringType),
+#                 th.Property("id", th.StringType),
+#                 th.Property("position", th.StringType),
+#             ))),
+#     ).to_dict()
 
 class TimeLogsStream(syncroStream):
     """Define custom stream."""
