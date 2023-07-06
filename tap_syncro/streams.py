@@ -15,7 +15,7 @@ class ContactsStream(syncroStream):
     path = "/contacts"
     records_jsonpath = '$.contacts[*]'
     properties = [
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("name",th.StringType),
         th.Property("address1",th.StringType),
         th.Property("address2",th.StringType),
@@ -49,7 +49,7 @@ class CustomersStream(syncroStream):
     path="/customers"
     records_jsonpath="$.customers[*]"
     properties = [
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("firstname",th.StringType),
         th.Property("lastname",th.StringType),
         th.Property("fullname",th.StringType),
@@ -102,7 +102,7 @@ class AppointmentsStream(syncroStream):
     primary_keys=["id"]
 
     schema = th.PropertiesList(
-        th.Property('id',th.IntegerType),
+        th.Property('id',th.StringType),
         th.Property('summary',th.StringType),
         th.Property('description',th.StringType),
         th.Property('customer_id',th.IntegerType),
@@ -212,7 +212,7 @@ class AssetsStream(syncroStream):
         th.Property(
             "rmm_store",
             th.ObjectType(
-                th.Property("id",th.IntegerType),
+                th.Property("id",th.StringType),
                 th.Property("asset_id",th.IntegerType),
                 th.Property("account_id",th.IntegerType),
                 th.Property(
@@ -322,7 +322,7 @@ class AssetsStream(syncroStream):
         th.Property(
             "address",
             th.ObjectType( 
-                th.Property("id",th.IntegerType),
+                th.Property("id",th.StringType),
                 th.Property("name",th.StringType),
                 th.Property("customer_id",th.IntegerType),
                 th.Property("address_type_id",th.IntegerType),
@@ -352,7 +352,7 @@ class ContractsStream(syncroStream):
     records_jsonpath = "$.contracts[*]"
 
     schema = th.PropertiesList( 
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("account_id",th.IntegerType),
         th.Property("customer_id",th.IntegerType),
         th.Property("name",th.StringType),
@@ -377,7 +377,7 @@ class EstimatesStream(syncroStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("customer_business_then_name",th.StringType),
         th.Property("number",th.StringType),
         th.Property("status",th.StringType),
@@ -404,7 +404,7 @@ class ItemsStream(syncroStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("requestedon",th.DateTimeType),
         th.Property("ticket_num",th.StringType),
         th.Property("parturl",th.StringType),
@@ -448,7 +448,7 @@ class LeadsStream(syncroStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("first_name",th.StringType),
         th.Property("last_name",th.StringType),
         th.Property("email",th.StringType),
@@ -486,7 +486,7 @@ class PortalUsersStream(syncroStream):
     schema = th.PropertiesList( 
         th.Property('account_id',th.IntegerType),
         th.Property('portal_group_id',th.IntegerType),
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("email",th.StringType),
         th.Property('disabled',th.BooleanType),
         th.Property("customer_id",th.IntegerType),
@@ -515,7 +515,7 @@ class ProductsStream(syncroStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("price_cost",th.NumberType),
         th.Property("price_retail",th.NumberType),
         th.Property("condition",th.StringType),
@@ -581,7 +581,7 @@ class PurchaseOrdersStream(syncroStream):
     primary_keys = ["id"]
 
     schema = th.PropertiesList(
-        th.Property("id",th.IntegerType),
+        th.Property("id",th.StringType),
         th.Property("account_subdomain",th.StringType),
         th.Property("created_at",th.DateTimeType),
         th.Property("updated_at",th.DateTimeType),
@@ -601,7 +601,7 @@ class PurchaseOrdersStream(syncroStream):
         th.Property(
             "vendor",
             th.ObjectType(
-                th.Property("id",th.IntegerType),
+                th.Property("id",th.StringType),
                 th.Property("name",th.StringType),
                 th.Property("rep_first_name",th.StringType),
                 th.Property("rep_last_name",th.StringType),
@@ -624,7 +624,7 @@ class PurchaseOrdersStream(syncroStream):
             "line_items",
             th.ArrayType(
                 th.ObjectType( 
-                    th.Property("id",th.IntegerType),
+                    th.Property("id",th.StringType),
                     th.Property("created_at",th.DateTimeType),
                     th.Property("updated_at",th.DateTimeType),
                     th.Property('purchase_order_id',th.IntegerType),
@@ -645,7 +645,7 @@ class InvoicesStream(syncroStream):
     records_jsonpath="$.invoices[*]"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("customer_id", th.IntegerType),
         th.Property("customer_business_then_name", th.StringType),
         th.Property("number", th.StringType),
@@ -678,7 +678,7 @@ class PaymentsStream(syncroStream):
     primary_keys = ["id"]
     records_jsonpath="$.payments[*]"
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("created_at", th.StringType),
         th.Property("updated_at", th.StringType),
         th.Property("success", th.BooleanType),
@@ -735,7 +735,7 @@ class RMMAlertStream(syncroStream):
     records_jsonpath="$.rmm_alerts[*]"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("customer_id", th.IntegerType),
         th.Property("ticket_number", th.IntegerType),
         th.Property("ticket_status", th.StringType),
@@ -757,7 +757,7 @@ class TicketTimerStream(syncroStream):
     path = "/ticket_timers"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("ticket_id", th.IntegerType),
         th.Property("user_id", th.IntegerType),
         th.Property("start_time", th.DateTimeType),
@@ -781,7 +781,7 @@ class TicketsStream(syncroStream):
     records_jsonpath="$.tickets[*]"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("number", th.IntegerType),
         th.Property("subject", th.StringType),
         th.Property("created_at", th.DateTimeType),
@@ -858,7 +858,7 @@ class TimeLogsStream(syncroStream):
     records_jsonpath="$.timelogs[*]"
     primary_keys = ["id"]
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("in_at", th.StringType),
         th.Property("out_at", th.StringType),
         th.Property("account_id", th.IntegerType),
@@ -879,7 +879,7 @@ class VendorsStream(syncroStream):
     primary_keys = ["id"]
     records_jsonpath="$.vendors[*]"
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("name", th.StringType),
         th.Property("rep_first_name", th.StringType),
         th.Property("rep_last_name", th.StringType),
@@ -904,7 +904,7 @@ class WikiPagesStream(syncroStream):
     primary_keys = ["id"]
     records_jsonpath="$.wiki_pages[*]"
     schema = th.PropertiesList(
-        th.Property("id", th.IntegerType),
+        th.Property("id", th.StringType),
         th.Property("account_id", th.IntegerType),
         th.Property("name", th.StringType),
         th.Property("slug", th.StringType),
