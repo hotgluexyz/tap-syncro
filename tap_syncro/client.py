@@ -59,6 +59,11 @@ class syncroStream(RESTStream):
         # headers["Private-Token"] = self.config.get("auth_token")
         return headers
 
+    def post_process(self, row: dict, context: dict | None = None) -> dict | None:
+        if row.get("id"):
+            row['id'] = str(row['id'])
+        return row
+
     def get_next_page_token(
         self,
         response: requests.Response,
