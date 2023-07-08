@@ -772,7 +772,7 @@ class TicketTimerStream(syncroStream):
         th.Property("product_id", th.IntegerType),
         th.Property("comment_id", th.IntegerType),
         th.Property("ticket_line_item_id", th.IntegerType),
-        th.Property("active_duration", th.StringType)
+        th.Property("active_duration", th.IntegerType)
     ).to_dict()
 
 class TicketsStream(syncroStream):
