@@ -689,7 +689,7 @@ class PaymentsStream(syncroStream):
         th.Property("payment_method", th.StringType),
         th.Property("customer", 
             th.ObjectType(
-                th.Property("id", th.IntegerType),
+                th.Property("id", th.StringType),
                 th.Property("firstname", th.StringType),
                 th.Property("lastname", th.StringType),
                 th.Property("fullname", th.StringType),
