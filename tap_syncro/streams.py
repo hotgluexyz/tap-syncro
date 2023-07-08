@@ -185,7 +185,7 @@ class AssetsStream(syncroStream):
     records_jsonpath="$.assets[*]"
 
     schema = th.PropertiesList( 
-        th.Property('id',th.IntegerType),
+        th.Property('id',th.StringType),
         th.Property('name',th.StringType),
         th.Property('customer_id',th.IntegerType),
         th.Property('contact_id',th.IntegerType),
@@ -212,7 +212,7 @@ class AssetsStream(syncroStream):
         th.Property(
             "rmm_store",
             th.ObjectType(
-                th.Property("id",th.StringType),
+                th.Property("id",th.IntegerType),
                 th.Property("asset_id",th.IntegerType),
                 th.Property("account_id",th.IntegerType),
                 th.Property(
@@ -322,7 +322,7 @@ class AssetsStream(syncroStream):
         th.Property(
             "address",
             th.ObjectType( 
-                th.Property("id",th.StringType),
+                th.Property("id",th.IntegerType),
                 th.Property("name",th.StringType),
                 th.Property("customer_id",th.IntegerType),
                 th.Property("address_type_id",th.IntegerType),
@@ -601,7 +601,7 @@ class PurchaseOrdersStream(syncroStream):
         th.Property(
             "vendor",
             th.ObjectType(
-                th.Property("id",th.StringType),
+                th.Property("id",th.IntegerType),
                 th.Property("name",th.StringType),
                 th.Property("rep_first_name",th.StringType),
                 th.Property("rep_last_name",th.StringType),
@@ -624,7 +624,7 @@ class PurchaseOrdersStream(syncroStream):
             "line_items",
             th.ArrayType(
                 th.ObjectType( 
-                    th.Property("id",th.StringType),
+                    th.Property("id",th.IntegerType),
                     th.Property("created_at",th.DateTimeType),
                     th.Property("updated_at",th.DateTimeType),
                     th.Property('purchase_order_id',th.IntegerType),

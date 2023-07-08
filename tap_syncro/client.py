@@ -62,6 +62,20 @@ class syncroStream(RESTStream):
     def post_process(self, row: dict, context: dict | None = None) -> dict | None:
         if row.get("id"):
             row['id'] = str(row['id'])
+        
+        if row.get('customer') and row.get('customer').get('id'):
+            if row['customer'].get('contacts'):
+                for i,r in enumerate(row['customer'].get('contacts')):
+                    row['customer']['contacts'][i]['id'] = str(row['customer']['contacts'][i]['id'])
+            
+            row['customer']['id'] = str(row['customer']['id'])
+        
+
+        if row.get('contacts') and len(row.get("contacts")) > 0:
+            for i,r in enumerate(row.get('contacts')):
+                row['contacts'][i]['id'] = str(row['contacts'][i]['id'])
+
+
         return row
 
     def get_next_page_token(
