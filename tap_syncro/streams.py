@@ -755,7 +755,7 @@ class TicketTimerStream(syncroStream):
     
     name = "ticket_timers"
     path = "/ticket_timers"
-    record_jsonpath = "$.ticket_timers[*]"
+    records_jsonpath = "$.ticket_timers[*]"
     primary_keys = ["id"]
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
