@@ -8,6 +8,8 @@ from typing import Optional, Any, Generator, Dict, Callable
 import backoff
 import logging
 from backoff.types import Details
+from http import HTTPStatus
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 
 import requests
 from singer_sdk.authenticators import APIKeyAuthenticator
@@ -30,6 +32,7 @@ class syncroStream(RESTStream):
     records_jsonpath = "$[*]"  # Or override `parse_response`.
     next_page_token_jsonpath = "$.meta.page"  # Or override `get_next_page_token`.
     max_page_token_jsonpath = "$.meta.total_pages"
+    ignore_statuses = [401]
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:
@@ -166,3 +169,22 @@ class syncroStream(RESTStream):
             "Backing off 60 seconds"
         )
    
+    def validate_response(self, response: requests.Response) -> None:
+        if response.status_code in self.ignore_statuses:
+            pass
+        elif (
+            response.status_code in self.extra_retry_statuses
+            or HTTPStatus.INTERNAL_SERVER_ERROR
+            <= response.status_code
+            <= max(HTTPStatus)
+        ):
+            msg = self.response_error_message(response)
+            raise RetriableAPIError(msg, response)
+
+        elif (
+            HTTPStatus.BAD_REQUEST
+            <= response.status_code
+            < HTTPStatus.INTERNAL_SERVER_ERROR
+        ):
+            msg = self.response_error_message(response)
+            raise FatalAPIError(msg)
