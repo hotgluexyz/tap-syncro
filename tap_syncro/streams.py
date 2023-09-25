@@ -345,7 +345,6 @@ class AssetsStream(syncroStream):
     ).to_dict()
 
 
-
 class ContractsStream(syncroStream):
     name= "contracts"
     path="/contracts"
@@ -574,6 +573,7 @@ class ProductsStream(syncroStream):
         )
     ).to_dict()
 
+
 class PurchaseOrdersStream(syncroStream):
     name="purchase_orders"
     path="/purchase_orders"
@@ -668,7 +668,6 @@ class InvoicesStream(syncroStream):
         th.Property("hardwarecost", th.StringType),
         th.Property("user_id", th.IntegerType)
     ).to_dict()
-
 
 
 class PaymentsStream(syncroStream):
@@ -774,6 +773,7 @@ class TicketTimerStream(syncroStream):
         th.Property("ticket_line_item_id", th.IntegerType),
         th.Property("active_duration", th.IntegerType)
     ).to_dict()
+
 
 class TicketsStream(syncroStream):
     """Define custom stream."""
@@ -915,3 +915,27 @@ class WikiPagesStream(syncroStream):
     ).to_dict()
 
 
+class LineItemsStream(syncroStream):
+    name = "line_items"
+    path = "/line_items"
+    primary_keys = ["id"]
+    records_jsonpath="$.line_items[*]"
+
+    schema = th.PropertiesList(
+        th.Property("id", th.StringType),
+        th.Property("created_at", th.DateTimeType),
+        th.Property("updated_at", th.DateTimeType),
+        th.Property("invoice_id", th.NumberType),
+        th.Property("item", th.StringType),
+        th.Property("name", th.StringType),
+        th.Property("cost", th.StringType),
+        th.Property("price", th.StringType),
+        th.Property("quantity", th.StringType),
+        th.Property("product_id", th.NumberType),
+        th.Property("taxable", th.BooleanType),
+        th.Property("discount_percent", th.CustomType({"type": ["number", "string"]})),
+        th.Property("position", th.NumberType),
+        th.Property("invoice_bundle_id", th.CustomType({"type": ["number", "string"]})),
+        th.Property("discount_dollars", th.CustomType({"type": ["number", "string"]})),
+        th.Property("product_category", th.StringType),
+    ).to_dict()
