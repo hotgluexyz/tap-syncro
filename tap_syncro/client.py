@@ -56,10 +56,8 @@ class syncroStream(RESTStream):
             A dictionary of HTTP headers.
         """
         headers = {}
-        if "user_agent" in self.config:
-            headers["User-Agent"] = self.config.get("user_agent")
-        # If not using an authenticator, you may also provide inline auth headers:
-        # headers["Private-Token"] = self.config.get("auth_token")
+        #Add this user_agent per request of Syncro
+        headers["User-Agent"] = self.config.get("user_agent", "hotglue (support@hotglue.xyz)")
         return headers
 
     def post_process(self, row: dict, context: dict | None = None) -> dict | None:
