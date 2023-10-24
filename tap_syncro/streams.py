@@ -922,7 +922,7 @@ class LineItemsStream(syncroStream):
     records_jsonpath="$.line_items[*]"
 
     schema = th.PropertiesList(
-        th.Property("id", th.StringType),
+        th.Property("id", th.CustomType({"type": ["number", "string"]})),
         th.Property("created_at", th.DateTimeType),
         th.Property("updated_at", th.DateTimeType),
         th.Property("invoice_id", th.NumberType),
@@ -939,3 +939,14 @@ class LineItemsStream(syncroStream):
         th.Property("discount_dollars", th.CustomType({"type": ["number", "string"]})),
         th.Property("product_category", th.StringType),
     ).to_dict()
+    def post_process(
+        self,
+        row: dict,
+        context: dict | None = None,  # noqa: ARG002
+    ) -> dict | None:
+        if isinstance(row['discount_dollars'],str):
+            try:
+                row['discount_dollars'] = float(row['discount_dollars'])
+            except:
+                row['discount_dollars'] = None
+        return row
