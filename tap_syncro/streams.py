@@ -922,7 +922,7 @@ class LineItemsStream(syncroStream):
     records_jsonpath="$.line_items[*]"
 
     schema = th.PropertiesList(
-        th.Property("id", th.CustomType({"type": ["number", "string"]})),
+        th.Property("id", th.NumberType),
         th.Property("created_at", th.DateTimeType),
         th.Property("updated_at", th.DateTimeType),
         th.Property("invoice_id", th.NumberType),
@@ -933,10 +933,10 @@ class LineItemsStream(syncroStream):
         th.Property("quantity", th.StringType),
         th.Property("product_id", th.NumberType),
         th.Property("taxable", th.BooleanType),
-        th.Property("discount_percent", th.CustomType({"type": ["number", "string"]})),
+        th.Property("discount_percent", th.NumberType),
         th.Property("position", th.NumberType),
-        th.Property("invoice_bundle_id", th.CustomType({"type": ["number", "string"]})),
-        th.Property("discount_dollars", th.CustomType({"type": ["number", "string"]})),
+        th.Property("invoice_bundle_id", th.NumberType),
+        th.Property("discount_dollars", th.NumberType),
         th.Property("product_category", th.StringType),
     ).to_dict()
     def post_process(
@@ -944,9 +944,13 @@ class LineItemsStream(syncroStream):
         row: dict,
         context: dict | None = None,  # noqa: ARG002
     ) -> dict | None:
-        if isinstance(row['discount_dollars'],str):
-            try:
-                row['discount_dollars'] = float(row['discount_dollars'])
-            except:
-                row['discount_dollars'] = None
+        
+        #We need to send only one type of valid data.
+        for item in row.keys():
+            if "number" in self.schema['properties'][item]['type']:
+                if isinstance(row['discount_dollars'],str):
+                    try:
+                        row[item] = float(row[item])
+                    except:
+                        row[item] = None
         return row
