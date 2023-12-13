@@ -150,22 +150,7 @@ class syncroStream(RESTStream):
         Returns:
             The wait generator
         """
-        return backoff.constant(interval=60)
-
-   
-    def backoff_handler(self, details: Details) -> None:
-        """Adds additional behaviour prior to retry.
-
-        By default will log out backoff details, developers can override
-        to extend or change this behaviour.
-
-        Args:
-            details: backoff invocation details
-                https://github.com/litl/backoff#event-handlers
-        """
-        logging.info(
-            "Backing off 60 seconds"
-        )
+        return backoff.expo(factor=2)
    
     def validate_response(self, response: requests.Response) -> None:
         if response.status_code in self.ignore_statuses:
@@ -186,3 +171,11 @@ class syncroStream(RESTStream):
         ):
             msg = self.response_error_message(response)
             raise FatalAPIError(msg)
+
+    def backoff_max_tries(self) -> int:
+        """The number of attempts before giving up when retrying requests.
+
+        Returns:
+            Number of max retries.
+        """
+        return 8    
