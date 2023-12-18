@@ -150,8 +150,8 @@ class syncroStream(RESTStream):
         Returns:
             The wait generator
         """
-        return backoff.expo(factor=2)
-   
+        return backoff.constant(interval=20)
+
     def validate_response(self, response: requests.Response) -> None:
         if response.status_code in self.ignore_statuses:
             pass
