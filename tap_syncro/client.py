@@ -156,7 +156,7 @@ class syncroStream(RESTStream):
         x_header = None
         if "X-Request-Id" in response.headers:
             x_header = response.headers["X-Request-Id"]
-            x_header = f", X-Request_Id: {x_header} ,"
+            x_header = f" X-Request_Id: {x_header} "
         if response.status_code in self.ignore_statuses:
             pass
         elif (
