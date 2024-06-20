@@ -153,6 +153,10 @@ class syncroStream(RESTStream):
         return backoff.constant(interval=20)
 
     def validate_response(self, response: requests.Response) -> None:
+        x_header = None
+        if "X-Request-Id" in response.headers:
+            x_header = response.headers["X-Request-Id"]
+            x_header = f", X-Request_Id: {x_header} ,"
         if response.status_code in self.ignore_statuses:
             pass
         elif (
@@ -160,7 +164,8 @@ class syncroStream(RESTStream):
             or HTTPStatus.INTERNAL_SERVER_ERROR
             <= response.status_code
             <= max(HTTPStatus)
-        ):
+        ):      
+            self.logger.warn(f"Failed with status code: {response.status_code} {x_header} with response: {response.text} for URl: {response.request.url}")
             msg = self.response_error_message(response)
             raise RetriableAPIError(msg, response)
 
@@ -170,6 +175,7 @@ class syncroStream(RESTStream):
             < HTTPStatus.INTERNAL_SERVER_ERROR
         ):
             msg = self.response_error_message(response)
+            self.logger.warn(f"Failed with status code: {response.status_code} {x_header} with response: {response.text} for URl: {response.request.url}")
             raise FatalAPIError(msg)
 
     def backoff_max_tries(self) -> int:
