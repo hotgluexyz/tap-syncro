@@ -150,7 +150,17 @@ class syncroStream(RESTStream):
         Returns:
             The wait generator
         """
-        return backoff.constant(interval=20)
+
+        """
+        Example:
+            - 1st retry: 20 seconds
+            - 2nd retry: 40 seconds
+            - 3rd retry: 80 seconds
+            - 4th retry: 160 seconds
+            - 5th retry: 320 seconds
+            - 5th retry: 640 seconds (capped at 10 minutes)
+        """
+        return backoff.expo(base=2, factor=20, max_value=640)
 
     def validate_response(self, response: requests.Response) -> None:
         x_header = None
@@ -184,4 +194,4 @@ class syncroStream(RESTStream):
         Returns:
             Number of max retries.
         """
-        return 8    
+        return 7 # 7 means 6 retries after first unsuccessful attempt
