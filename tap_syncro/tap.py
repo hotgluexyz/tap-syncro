@@ -1,5 +1,7 @@
 """syncro tap class."""
 
+# Smoke test change
+
 from __future__ import annotations
 
 from singer_sdk import Tap
