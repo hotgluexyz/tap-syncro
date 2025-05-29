@@ -48,6 +48,8 @@ class CustomersStream(syncroStream):
     name = "customers"
     path = "/customers"
     records_jsonpath = "$.customers[*]"
+    page_size = 25
+
     properties = [
         th.Property("id", th.StringType),
         th.Property("firstname", th.StringType),
