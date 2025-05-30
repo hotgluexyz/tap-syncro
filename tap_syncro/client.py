@@ -134,6 +134,8 @@ class syncroStream(RESTStream):
         params: dict = {}
         if next_page_token:
             params["page"] = next_page_token
+        if hasattr(self, 'page_size') and self.page_size:
+            params["per_page"] = self.page_size
         if self.replication_key:
             params["sort"] = "asc"
             params["order_by"] = self.replication_key
