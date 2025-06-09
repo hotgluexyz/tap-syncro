@@ -153,10 +153,10 @@ class syncroStream(RESTStream):
         # Update page size on retries
         prepared_request = details.get("args")[0]
         if self.page_size:
-            current_params = urlparse(prepared_request.url).query
-            current_params = parse_qs(current_params)
+            parsed_url = urlparse(prepared_request.url)
+            current_params = parse_qs(parsed_url.query)
             current_params["per_page"] = self.page_size
-            prepared_request.prepare_url(prepared_request.url, params=current_params)
+            prepared_request.prepare_url(parsed_url.geturl(), params=current_params)
 
     def backoff_wait_generator(self) -> Generator[float, None, None]:
         """The wait generator used by the backoff decorator on request failure.
