@@ -37,7 +37,6 @@ class syncroStream(RESTStream):
     next_page_token_jsonpath = "$.meta.page"  # Or override `get_next_page_token`.
     max_page_token_jsonpath = "$.meta.total_pages"
     ignore_statuses = [401]
-    page_size = None
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:
