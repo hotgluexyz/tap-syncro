@@ -1,7 +1,7 @@
 """REST client handling, including syncroStream base class."""
 
 from __future__ import annotations
-
+from urllib.parse import urlparse, parse_qs
 from pathlib import Path
 from typing import Any, Callable, Iterable
 from typing import Optional, Any, Generator, Dict, Callable
@@ -22,6 +22,10 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 class syncroStream(RESTStream):
     """syncro stream class."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.page_size = self.config.get("page_size")
 
    
     @property
@@ -139,7 +143,21 @@ class syncroStream(RESTStream):
         if self.replication_key:
             params["sort"] = "asc"
             params["order_by"] = self.replication_key
+
+        if self.page_size:
+            params["per_page"] = self.page_size
         return params
+    
+
+    def backoff_handler(self, details: Details) -> None:
+        super().backoff_handler(details)
+        # Update page size on retries
+        prepared_request = details.get("args")[0]
+        if self.page_size:
+            parsed_url = urlparse(prepared_request.url)
+            current_params = parse_qs(parsed_url.query)
+            current_params["per_page"] = self.page_size
+            prepared_request.prepare_url(parsed_url.geturl(), params=current_params)
 
     def backoff_wait_generator(self) -> Generator[float, None, None]:
         """The wait generator used by the backoff decorator on request failure.
@@ -178,6 +196,14 @@ class syncroStream(RESTStream):
             <= max(HTTPStatus)
         ):      
             self.logger.warn(f"Failed with status code: {response.status_code} {x_header} with response: {response.text} for URl: {response.request.url}")
+
+            if response.status_code == 504 and "gateway time-out" in response.text.lower():
+                self.logger.warn(f"Gateway time-out for URL: {response.request.url}")
+                if not self.page_size or (self.page_size and self.page_size > 1):
+                    self.page_size = self.page_size // 2 if self.page_size else 16
+                    self.logger.warn(f"Decreasing page size to {self.page_size}")
+                    
+
             msg = self.response_error_message(response)
             raise RetriableAPIError(msg, response)
 
