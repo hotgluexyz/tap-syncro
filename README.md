@@ -26,6 +26,8 @@ pipx install git+https://github.com/ORG_NAME/tap-syncro.git@main
 
 ## Configuration
 
+A sample configuration file and full option reference are in the [`templates/`](templates/) folder: use [`templates/config.json`](templates/config.json) as a starting point and see [`templates/README.md`](templates/README.md) for a description of each config option, types, defaults, and examples.
+
 ### Accepted Config Options
 
 <!--

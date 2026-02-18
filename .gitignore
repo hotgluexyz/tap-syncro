@@ -139,4 +139,5 @@ dmypy.json
 
 # JSON 
 *.json
+!templates/*.json
 *.txt
