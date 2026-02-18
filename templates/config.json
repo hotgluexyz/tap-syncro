@@ -1,0 +1,6 @@
+{
+  "auth_token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "subdomain": "your-subdomain",
+  "page_size": 100,
+  "user_agent": "tap-syncro/1.0.0"
+}
