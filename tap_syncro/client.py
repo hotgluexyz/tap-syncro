@@ -3,10 +3,10 @@
 from __future__ import annotations
 from urllib.parse import urlparse, parse_qs
 from pathlib import Path
-from typing import Any, Callable, Iterable
-from typing import Optional, Any, Generator, Dict, Callable
+from typing import Any, Callable, Generator
+
 import backoff
-import logging
+import random
 from backoff.types import Details
 from http import HTTPStatus
 from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
@@ -159,6 +159,10 @@ class syncroStream(RESTStream):
             current_params["per_page"] = self.page_size
             prepared_request.prepare_url(parsed_url.geturl(), params=current_params)
 
+    def backoff_jitter(self, value: float) -> float:
+        """Half jitter: wait uniformly in [value/2, value] to spread retries without going below half."""
+        return random.uniform(value / 2, value)
+
     def backoff_wait_generator(self) -> Generator[float, None, None]:
         """The wait generator used by the backoff decorator on request failure.
 
@@ -222,4 +226,4 @@ class syncroStream(RESTStream):
         Returns:
             Number of max retries.
         """
-        return 7 # 7 means 6 retries after first unsuccessful attempt
+        return 9 # 9 means 8 retries after first unsuccessful attempt
