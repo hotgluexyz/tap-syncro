@@ -1,0 +1,244 @@
+{
+  "streams": [
+    {
+      "tap_stream_id": "customers",
+      "replication_method": "FULL_TABLE",
+      "key_properties": [],
+      "schema": {
+        "properties": {
+          "id": { "type": ["string", "null"] },
+          "firstname": { "type": ["string", "null"] },
+          "lastname": { "type": ["string", "null"] },
+          "fullname": { "type": ["string", "null"] },
+          "business_name": { "type": ["string", "null"] },
+          "email": { "type": ["string", "null"] },
+          "phone": { "type": ["string", "null"] },
+          "mobile": { "type": ["string", "null"] },
+          "created_at": { "format": "date-time", "type": ["string", "null"] },
+          "updated_at": { "format": "date-time", "type": ["string", "null"] },
+          "pdf_url": { "type": ["string", "null"] },
+          "address": { "type": ["string", "null"] },
+          "address_2": { "type": ["string", "null"] },
+          "city": { "type": ["string", "null"] },
+          "state": { "type": ["string", "null"] },
+          "zip": { "type": ["string", "null"] },
+          "latitude": { "type": ["number", "null"] },
+          "longitude": { "type": ["number", "null"] },
+          "notes": { "type": ["string", "null"] },
+          "get_sms": { "type": ["boolean", "null"] },
+          "opt_out": { "type": ["boolean", "null"] },
+          "disabled": { "type": ["boolean", "null"] },
+          "no_email": { "type": ["boolean", "null"] },
+          "location_name": { "type": ["string", "null"] },
+          "location_id": { "type": ["integer", "null"] },
+          "online_profile_url": { "type": ["string", "null"] },
+          "tax_rate_id": { "type": ["integer", "null"] },
+          "notification_email": { "type": ["string", "null"] },
+          "invoice_cc_emails": { "type": ["string", "null"] },
+          "invoice_term_id": { "type": ["number", "null"] },
+          "referred_by": { "type": ["string", "null"] },
+          "ref_customer_id": { "type": ["integer", "null"] },
+          "business_and_full_name": { "type": ["string", "null"] },
+          "business_then_name": { "type": ["string", "null"] },
+          "contacts": {
+            "items": {
+              "properties": {
+                "id": { "type": ["string", "null"] },
+                "name": { "type": ["string", "null"] },
+                "address1": { "type": ["string", "null"] },
+                "address2": { "type": ["string", "null"] },
+                "city": { "type": ["string", "null"] },
+                "state": { "type": ["string", "null"] },
+                "zip": { "type": ["string", "null"] },
+                "email": { "type": ["string", "null"] },
+                "phone": { "type": ["string", "null"] },
+                "mobile": { "type": ["string", "null"] },
+                "latitude": { "type": ["number", "null"] },
+                "longitude": { "type": ["number", "null"] },
+                "customer_id": { "type": ["integer", "null"] },
+                "account_id": { "type": ["integer", "null"] },
+                "notes": { "type": ["string", "null"] },
+                "created_at": {
+                  "format": "date-time",
+                  "type": ["string", "null"]
+                },
+                "updated_at": {
+                  "format": "date-time",
+                  "type": ["string", "null"]
+                },
+                "vendor_id": { "type": ["integer", "null"] },
+                "opt_out": { "type": ["boolean", "null"] },
+                "extension": { "type": ["string", "null"] },
+                "processed_phone": { "type": ["string", "null"] },
+                "processed_mobile": { "type": ["string", "null"] },
+                "ticket_matching_emails": { "type": ["string", "null"] },
+                "properties": { "type": ["object", "null"] }
+              },
+              "type": "object"
+            },
+            "type": ["array", "null"]
+          },
+          "properties": { "type": ["object", "null"] }
+        },
+        "type": "object"
+      },
+      "stream": "customers",
+      "metadata": [
+        {
+          "breadcrumb": ["properties", "id"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "firstname"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "lastname"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "fullname"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "business_name"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "email"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "phone"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "mobile"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "created_at"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "updated_at"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "pdf_url"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "address"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "address_2"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "city"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "state"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "zip"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "latitude"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "longitude"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "notes"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "get_sms"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "opt_out"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "disabled"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "no_email"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "location_name"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "location_id"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "online_profile_url"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "tax_rate_id"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "notification_email"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "invoice_cc_emails"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "invoice_term_id"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "referred_by"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "ref_customer_id"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "business_and_full_name"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "business_then_name"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "contacts"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": ["properties", "properties"],
+          "metadata": { "inclusion": "available", "selected": true }
+        },
+        {
+          "breadcrumb": [],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true,
+            "selected-by-default": true,
+            "table-key-properties": [],
+            "replication-method": "FULL_TABLE"
+          }
+        }
+      ]
+    }
+  ]
+}
